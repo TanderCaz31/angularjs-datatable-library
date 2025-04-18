@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>
+        Project query history
+    </title>
+</head>
+
+<body>
+    <div class="container-fluid offset pb-3">
+
+        <h2 class="offset pt-3 p-1"><strong>Lista di tutte le query effettuate in questo progetto</strong></h2>
+        <p>Per imparare <strong>Bootstrap</strong> e allo scopo di <em>documentazione</em>,
+            qui trovi una lista delle query effettuate durante la creazione del database in MySql di questo progetto.
+        </p>
+        <br>
+        <br>
+        <hr class="hr" />
+        <h3>Creazione iniziale delle tabelle</h3>
+
+        <p class="text-primary">Tabella 'nominativi'</p>
+
+        <div class="container-fluid border bg-dark text-light">
+            <samp>CREATE TABLE nominativi (<br>
+                id INTEGER AUTO_INCREMENT PRIMARY KEY,<br>
+                nome VARCHAR NOT NULL,<br>
+                cognome VARCHAR,<br>
+                data_nascita DATE,<br>
+                id_città INTEGER,<br>
+                email VARCHAR<br>
+                )</samp>
+        </div>
+        <br>
+
+        <p class="text-primary">Tabella 'regioni'</p>
+
+        <div class="container-fluid border bg-dark text-light">
+            <samp>CREATE TABLE regioni (<br>
+                id INTEGER AUTO_INCREMENT PRIMARY KEY,<br>
+                nome VARCHAR(50)<br>
+                )</samp>
+        </div>
+        <br>
+
+        <p class="text-primary">Tabella 'città'</p>
+
+        <div class="container-fluid border bg-dark text-light">
+            <samp>CREATE TABLE città (<br>
+                id INTEGER AUTO_INCREMENT PRIMARY KEY,<br>
+                nome VARCHAR(50),<br>
+                id_regione INTEGER,<br>
+                FOREIGN KEY (id_regione) REFERENCES regioni(id)<br>
+                )</samp>
+        </div>
+        <br>
+
+        <p class="text-primary">Modifica a 'nominativi' per correggere il vincolo</p>
+
+        <div class="container-fluid border bg-dark text-light">
+            <samp>ALTER TABLE nominativi<br>
+                ADD CONSTRAINT FOREIGN KEY (id_città) REFERENCES città(id)</samp>
+        </div>
+
+        <br>
+        <br>
+        <hr class="hr" />
+        <h3>Popolazione delle tabelle</h3>
+
+        <p class="text-primary">Tabella 'regioni'</p>
+
+        <div class="container-fluid border bg-dark text-light">
+            <samp>INSERT INTO regioni VALUES (0, "Liguria"), (0, "Lazio"), (0, "Sicilia"), (0, "Sardegna")</samp>
+        </div>
+        <br>
+
+        <p class="text-primary">Tabella 'città'</p>
+
+        <div class="container-fluid border bg-dark text-light">
+
+            <samp>INSERT INTO città VALUES (0, "Napoli", 1), (0, "Roma", 3), (0, "Marigliano", 1), (0, "Cagliari",
+                5)</samp>
+        </div>
+        <br>
+
+        <p class="text-primary">Tabella 'nominativi'</p>
+
+        <div class="container-fluid border bg-dark text-light mb-2">
+            <samp>INSERT INTO nominativi
+                VALUES (0, 'Giona', 'Coppola', '2003-11-19', 1, 'tandercaz31&#64;gmail.com'),
+                (0, 'Armando', 'Scuotto', '2003-05-06', 1, 'placeholder&#64;mail.com')</samp>
+        </div>
+
+        <div class="container-fluid border bg-dark text-light">
+            <samp>INSERT INTO nominativi VALUES
+                (0, "Jack", "Black", "1983-04-22", 4, "jack.black&#64;gmack.com"),
+                (0, "Giulio", "Corsi", "1999-09-19", 3, "volevoessere&#64;duro.com"),
+                (0, "Luca", "Barrella", "2003-09-08", 3, "luca.barrela&#64;gmail.com"),
+                (0, "Giacomo", "Leopardi", "1800-01-01", 2, "gialeo&#64;gmail.com")</samp>
+        </div>
+
+        <br>
+        <br>
+        <hr class="hr" />
+        <h3>Correzione degli accenti</h3>
+        <p>L'accento dava problemi con varie query</p> <br>
+
+        <p class="text-primary">Tabella 'nominativi'</p>
+
+        <div class="container-fluid border bg-dark text-light">
+            <samp>ALTER TABLE nominativi CHANGE id_città id_citta INTEGER</samp>
+        </div>
+        <br>
+
+        <p class="text-primary">Tabella 'citta'</p>
+
+        <div class="container-fluid border bg-dark text-light">
+            <samp>ALTER TABLE città RENAME TO citta</samp>
+        </div>
+    </div>
+</body>
+
+</html>
