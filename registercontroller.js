@@ -18,7 +18,7 @@ app.controller("RegisterController", function ($scope) {
         }
 
         // POST request to add user to the database
-        fetch("db/add-user.php", {
+        fetch("db/add_user.php", {
             "method": "POST",
             "headers": {
                 "Content-Type": "application/json;"

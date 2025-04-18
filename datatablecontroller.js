@@ -71,7 +71,7 @@ app.controller("DatatableController", function ($scope) {
 
     // Editing logic
     $("#datatable").on("click", ".btn-secondary", function () {
-        const clickedRow = table.row($(this).parents('tr'));
+        const clickedRow = table.row($(this).parents("tr"));
 
         $scope.editingUser = clickedRow.data();
 
@@ -82,6 +82,24 @@ app.controller("DatatableController", function ($scope) {
         $scope.$apply();
     });
 
+    //TODO UNFINISHED FEATURE
+    $("#datatable").on("dblclick", "td", function () {
+        //let row = table.row((this));
+        const cell = table.cell(this._DT_CellIndex.row, this._DT_CellIndex.column);
+        const columnName = table.column(this._DT_CellIndex.column).title();
+        const cellData = cell.data();
+
+        switch (columnName) {
+            case "email": case "Edit record": case "id":
+                break;
+            default:
+                console.log(`Clicked column: ${columnName}`);
+                console.log(`Cell data: ${cellData}`);
+                break;
+        }
+    });
+
+
     $scope.submitEdit = () => {
         const inputUser = {
             id: $scope.editingUser.id,
@@ -91,7 +109,7 @@ app.controller("DatatableController", function ($scope) {
             id_citta: $scope.editingUser.id_citta ?? $scope.cities.find((city) => city.nome === $scope.editingUser.citta).id
         };
 
-        fetch("db/edit-user.php", {
+        fetch("db/edit_user.php", {
             "method": "POST",
             "headers": {
                 "Content-Type": "application/json;"

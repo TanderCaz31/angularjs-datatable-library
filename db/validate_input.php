@@ -1,6 +1,6 @@
 <?php
 
-include("fetch-emails.php");
+include("check_duplicate_mail.php");
 
 function validateInput($user, $conn)
 {
@@ -40,14 +40,13 @@ function validateInput($user, $conn)
 
     // Email validation
     if (!(is_null($user->id)) && is_null($user->email)) return $user; // Escaping for the Edit feature
-    $usedEmails = getEmails($conn);
 
     if (
         !str_contains($user->email, "@")
         || !str_contains($user->email, ".")
     ) {
         return throwErr("Insert a valid email.");
-    } elseif (in_array($user->email, $usedEmails)) {
+    } elseif (checkDuplicateMail($conn, $user->email)) {
         return throwErr("That email is already taken, please choose another one.");
     }
 

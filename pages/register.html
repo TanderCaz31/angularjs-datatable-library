@@ -29,7 +29,7 @@
                 <div class="col-md-2">
                     <select class="form-select" ng-model="id_citta" required>
                         <option selected disabled value="">Choose City...</option>
-                        <option value="{{ city.id }}" ng-repeat="city in cities | filter: {id_regione: region_id}">{{ city.nome }}</option>
+                        <option value="{{ city.id }}" ng-repeat="city in cities | filter: {id_regione: region_id?}">{{ city.nome }}</option>
                     </select>
                 </div>
 

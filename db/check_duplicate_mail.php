@@ -2,19 +2,17 @@
 
 error_reporting(0); // To ignore errors in echo
 
-function getEmails($conn)
+function checkDuplicateMail($conn, $email)
 {
-    $stmt = $conn->prepare("SELECT email FROM nominativi");
+    $stmt = $conn->prepare("SELECT COUNT(*) AS emails FROM nominativi WHERE email = ?");
+    $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result) {
         $outp = $result->fetch_all(MYSQLI_ASSOC);
 
-        foreach($outp as &$email) {
-            $email = $email["email"];
-        }
-        return $outp;
+        return $outp[0]["emails"];
     } else {
         return [];
     }
