@@ -1,3 +1,0 @@
-Un bottone per modificare i dati di un utente
-All'inserimento e modifica non si può mettere una data minore di 18 anni
-Nella datatable, mostra il nome della provincia e della regione

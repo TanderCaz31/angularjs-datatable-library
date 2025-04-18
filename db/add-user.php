@@ -1,6 +1,6 @@
 <?php
 
-error_reporting(0); // To ignore errors in echo
+//error_reporting(0); // To ignore errors in echo
 
 if (!isset($_POST)) {
     echo "Form response was received incorrectly.";

@@ -15,8 +15,8 @@ include("validate_input.php");
 
 $user = validateInput($user, $conn);
 
-$stmt = $conn->prepare("UPDATE nominativi SET nome = ?, cognome = ?, data_nascita = ?, id_citta = ?, email = ? WHERE id = ?");
-$stmt->bind_param("sssisi", $user->nome, $user->cognome, $user->data_nascita, $user->id_citta, $user->email, $user->id);
+$stmt = $conn->prepare("UPDATE nominativi SET nome = ?, cognome = ?, data_nascita = ?, id_citta = ? WHERE id = ?");
+$stmt->bind_param("ssssi", $user->nome, $user->cognome, $user->data_nascita, $user->id_citta, $user->id);
 
 $stmt->execute();
 

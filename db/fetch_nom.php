@@ -1,11 +1,6 @@
 <?php
 //error_reporting(0); // To ignore errors in echo
 
-if (!isset($_POST)) {
-    echo "PHP has not received a POST request!";
-    return;
-}
-
 include("dbconn.php"); // DB connection
 
 $query = "SELECT n.id AS id, n.nome AS nome, n.cognome AS cognome, n.data_nascita AS data_nascita, c.nome AS citta, r.nome AS regione, n.email AS email FROM nominativi n

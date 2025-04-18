@@ -1,6 +1,4 @@
 app.controller("RegisterController", function ($scope) {
-    const resultText = document.getElementById("result-text");
-
     // Fetching Region and City information
     fetch("db/fetch_citynames.php").then(async (response) => {
         $data = await response.json();
@@ -11,12 +9,6 @@ app.controller("RegisterController", function ($scope) {
     })
 
     $scope.submitHandler = () => {
-        // Dismiss if user is less than 18 years old
-        if (moment().diff(moment($scope.data_nascita), "year") < 18) {
-            $scope.showAlert({ text: "User must be over 18 years old.", type: "danger" });
-            return;
-        }
-
         const inputUser = {
             nome: $scope.nome,
             cognome: $scope.cognome,
@@ -37,21 +29,19 @@ app.controller("RegisterController", function ($scope) {
                 const text = await response.text();
 
                 if (Number(text) === 1) { // PHP will return "1" if the request is successful, otherwise will give a custom error message
-                    $scope.showAlert({ text: "User was added successfully!", type: "success" });
+                    showAlert({ text: "User was added successfully!", type: "success" });
                     document.querySelector("#register-form").reset();
                 } else {
-                    $scope.showAlert({ text: text, type: "danger" });
+                    showAlert({ text: text, type: "danger" });
                 }
                 $scope.$apply();
             })
     }
 
-    $scope.delay = async (timeout) => {
-        return new Promise(resolve => setTimeout(resolve, timeout));
-    }
+    // Register attempt feedback
+    const resultText = document.querySelector("#result-text");
 
-    // Feedback message display
-    $scope.showAlert = async (message) => {
+    async function showAlert(message) {
         const messageClass = (() => {
             switch (message.type) {
                 case "success":
@@ -66,9 +56,13 @@ app.controller("RegisterController", function ($scope) {
         resultText.classList.add(messageClass);
         resultText.innerText = message.text;
 
-        await $scope.delay(2000);
+        await delay(2000);
         // Reset classes to normal
         resultText.classList.remove(messageClass);
         resultText.innerText = "";
+    }
+
+    async function delay(timeout) {
+        return new Promise(resolve => setTimeout(resolve, timeout));
     }
 });

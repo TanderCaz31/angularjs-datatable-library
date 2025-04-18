@@ -19,7 +19,7 @@
 <!-- Edit user modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Edit user</h5>
@@ -33,44 +33,49 @@
                         <fieldset>
                             <div class="row g-3 mb-3">
                                 <div class="col-md-4">
-                                    <input type="text" placeholder="First name" ng-model="editingUser.nome" class="form-control" required>
+                                    <input type="text" placeholder="First name" ng-model="editingUser.nome"
+                                        class="form-control" required>
                                 </div>
-                
+
                                 <div class="col-md-4">
-                                    <input type="text" placeholder="Surname" ng-model="editingUser.cognome" class="form-control" required>
+                                    <input type="text" placeholder="Surname" ng-model="editingUser.cognome"
+                                        class="form-control" required>
                                 </div>
-                
+
                                 <div class="col-md-4">
-                                    <input type="date" ng-model="editingUser.data_nascita" class="form-control" required>
+                                    <input type="date" ng-model="editingUser.data_nascita" class="form-control"
+                                        required>
                                 </div>
                             </div>
-                
+
                             <div class="row g-3 mb-3">
                                 <div class="col-md-4">
                                     <select class="form-select" ng-model="editingUser.id_regione" required>
-                                        <option selected disabled value="">Choose Region...</option>
-                                        <option value="{{ region.id }}" ng-repeat="region in regions">{{ region.nome }}</option>
+                                        <option value="{{ region.id }}" ng-selected="region.nome === editingUser.regione"
+                                            ng-repeat="region in regions">{{ region.nome }}</option>
                                     </select>
                                 </div>
-                
+
                                 <div class="col-md-4">
                                     <select class="form-select" ng-model="editingUser.id_citta" required>
-                                        <option selected disabled value="">Choose City...</option>
-                                        <option value="{{ city.id }}" ng-repeat="city in cities | filter: {id_regione: editingUser.id_regione}">{{ city.nome }}</option>
+                                        <option value="{{ city.id }}" ng-selected="city.nome === editingUser.citta"
+                                            ng-repeat="city in cities | filter: {id_regione: editingUser.id_regione}">
+                                            {{ city.nome }}</option>
                                     </select>
                                 </div>
-                
+
                                 <div class="col-md-4">
-                                    <input type="email" placeholder="email@gmail.com" ng-model="editingUser.email" class="form-control" required>
+                                    <input type="email" disabled placeholder="email@gmail.com"
+                                        ng-model="editingUser.email" class="form-control" required>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary" ng-click="submitEdit()">Submit</button>
                         </fieldset>
                         <p class="pt-2" id="result-text"></p>
                     </form>
+                    <p>This user is {{ editingUser.age }} years old</p>
                 </div>
                 <br>
-                This user is {{ editingUser.age }} years old
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

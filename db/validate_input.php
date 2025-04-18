@@ -1,6 +1,9 @@
 <?php
 
-function validateInput($user, $conn) {
+include("fetch-emails.php");
+
+function validateInput($user, $conn)
+{
     // Name validation
     if (strlen($user->nome) > 30) {
         return throwErr("Name must be shorter than 30 characters.");
@@ -16,8 +19,15 @@ function validateInput($user, $conn) {
     }
 
     // Date of birth validation
+    $now = new DateTime("now");
+    $over18 = $now->modify("-18 years");
+
+    $userBirthdate = new DateTime($user->data_nascita);
+
     if (!str_contains($user->data_nascita, "-")) {
         return throwErr("Insert a valid date of birth.");
+    } elseif ($userBirthdate > $over18) {
+        return throwErr("Insert an age over 18.");
     }
 
     // City id validation
@@ -29,17 +39,23 @@ function validateInput($user, $conn) {
     }
 
     // Email validation
+    if (!(is_null($user->id)) && is_null($user->email)) return $user; // Escaping for the Edit feature
+    $usedEmails = getEmails($conn);
+
     if (
         !str_contains($user->email, "@")
         || !str_contains($user->email, ".")
     ) {
         return throwErr("Insert a valid email.");
+    } elseif (in_array($user->email, $usedEmails)) {
+        return throwErr("That email is already taken, please choose another one.");
     }
 
     return $user;
 }
 
-function throwErr($message) {
+function throwErr($message)
+{
     echo $message;
     return null;
 }
